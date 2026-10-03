@@ -63,6 +63,71 @@
   mdI.addEventListener('input', renderPreview);
   renderPreview();
 
+  // —— 图片粘贴 / 拖拽上传 ——
+  function bufToB64(buf) {
+    var bytes = new Uint8Array(buf), bin = '', chunk = 0x8000;
+    for (var i = 0; i < bytes.length; i += chunk) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+    return btoa(bin);
+  }
+  function insertAtCursor(text) {
+    var s = mdI.selectionStart, e = mdI.selectionEnd;
+    mdI.value = mdI.value.slice(0, s) + text + mdI.value.slice(e);
+    var pos = s + text.length;
+    mdI.selectionStart = mdI.selectionEnd = pos;
+    mdI.focus();
+    renderPreview();
+  }
+  function uploadImage(file) {
+    var repo = repoI.value.trim(), branch = branchI.value.trim() || 'main', token = tokenI.value.trim();
+    if (!repo || !token) return Promise.reject(new Error('请先填写仓库与令牌'));
+    if (file.size > 5 * 1024 * 1024) return Promise.reject(new Error('图片 ' + (file.name || '') + ' 超过 5MB，请压缩后重试'));
+    var p = repo.split('/'), owner = p[0], repoName = p[1] || p[0];
+    var ext = (file.name.split('.').pop() || 'png').toLowerCase();
+    if (['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].indexOf(ext) < 0) ext = 'png';
+    var fname = 'img-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6) + '.' + ext;
+    return file.arrayBuffer().then(function (buf) {
+      var b64str = bufToB64(buf);
+      return fetch('https://api.github.com/repos/' + repo + '/contents/images/' + fname, {
+        method: 'PUT',
+        headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'add image: ' + fname, branch: branch, content: b64str })
+      }).then(function (r) {
+        if (!r.ok) return r.json().then(function (j) { return Promise.reject(new Error('图片上传失败(' + r.status + ')' + (j.message ? ': ' + j.message : ''))); });
+        return r.json();
+      }).then(function () { return 'https://' + owner + '.github.io/' + repoName + '/images/' + fname; });
+    });
+  }
+  function handleImages(files) {
+    var repo = repoI.value.trim(), token = tokenI.value.trim();
+    if (!repo || !token) { show('要贴图请先在上方填好“仓库（owner/repo）”和“访问令牌 PAT”。', 'err'); return; }
+    var n = files.length, done = 0;
+    show('正在上传 ' + n + ' 张图片…', 'info');
+    var chain = Promise.resolve();
+    files.forEach(function (file) {
+      chain = chain.then(function () {
+        return uploadImage(file).then(function (url) {
+          insertAtCursor('![](' + url + ')\n');
+          done++;
+          show('已上传 ' + done + '/' + n + ' 张图片，已插入正文。', 'info');
+        });
+      }).catch(function (err) { show('❌ ' + (err && err.message || err), 'err'); });
+    });
+    chain.then(function () { if (done === n && n > 0) show('✅ 图片已插入，点“发布到 GitHub”即可连同笔记一起发布。', 'ok'); });
+  }
+  mdI.addEventListener('paste', function (e) {
+    var cd = e.clipboardData || (e.originalEvent && e.originalEvent.clipboardData);
+    if (!cd) return;
+    var files = [];
+    for (var i = 0; i < cd.items.length; i++) if (cd.items[i].type && cd.items[i].type.indexOf('image') === 0) files.push(cd.items[i].getAsFile());
+    if (files.length) { e.preventDefault(); handleImages(files); }
+  });
+  mdI.addEventListener('dragover', function (e) { e.preventDefault(); });
+  mdI.addEventListener('drop', function (e) {
+    if (!e.dataTransfer) return;
+    var files = Array.prototype.slice.call(e.dataTransfer.files || []).filter(function (f) { return f.type && f.type.indexOf('image') === 0; });
+    if (files.length) { e.preventDefault(); handleImages(files); }
+  });
+
   function buildNoteHtml(subj, title, bodyHtml) {
     return '<!DOCTYPE html>\n<html lang="zh-CN" data-theme="light">\n<head>\n<meta charset="UTF-8">\n' +
       '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + esc(title) + '</title>\n' +
