@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物理 · 力学</title>
+<meta name="description" content="受力分析、牛顿定律、能量守恒">
+<script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">📚 学习笔记</a>
+    <button id="themeToggle" class="theme-btn" aria-label="切换主题" title="切换亮/暗色">🌙</button>
+  </div>
+</header>
+
+<main class="container reading">
+  <a class="back" href="../index.html#physics">← 返回物理</a>
+  <article class="note">
+    <div class="note-meta"><span class="card-cat">物理</span><span>2026-10-03</span></div>
+    <h1>力学</h1>
+
+    <h2>运动学基本公式（匀变速）</h2>
+    <ul>
+      <li>速度：v = v₀ + at</li>
+      <li>位移：x = v₀t + ½at²</li>
+      <li>速度-位移：v² − v₀² = 2ax</li>
+      <li>平均速度：v̄ = (v₀ + v)/2（仅匀变速）</li>
+    </ul>
+
+    <h2>受力分析四步</h2>
+    <ol>
+      <li>先画<strong>重力</strong>；</li>
+      <li>再画<strong>已知外力</strong>（拉力、推力）；</li>
+      <li>绕接触面找<strong>弹力</strong>（垂直接触面）；</li>
+      <li>沿接触面找<strong>摩擦力</strong>（与相对运动/趋势方向相反）。</li>
+    </ol>
+    <p>多力时建系做<strong>正交分解</strong>：沿运动方向和垂直方向列方程。</p>
+
+    <h2>牛顿运动定律</h2>
+    <ul>
+      <li>F 合 = ma：先整体求加速度，再隔离求内力（连接体问题）。</li>
+      <li>超重/失重看<strong>竖直方向加速度</strong>：向上 a 超重，向下 a 失重，a=g 完全失重。</li>
+    </ul>
+
+    <h2>功能关系</h2>
+    <table>
+      <thead><tr><th>规律</th><th>条件 / 表达式</th></tr></thead>
+      <tbody>
+        <tr><td>动能定理</td><td>W 合 = ΔEₖ（无条件，最常用）</td></tr>
+        <tr><td>机械能守恒</td><td>只有重力/弹力做功：Eₖ₁+Eₚ₁ = Eₖ₂+Eₚ₂</td></tr>
+        <tr><td>功能原理</td><td>W 除重力外 = Δ机械能</td></tr>
+      </tbody>
+    </table>
+
+    <h2>常见模型</h2>
+    <ul>
+      <li><strong>斜面</strong>：mgsinθ 沿面向下；f = μmg·cosθ（滑动）。</li>
+      <li><strong>传送带</strong>：分“共速前/共速后”两段讨论，注意摩擦力方向突变。</li>
+      <li><strong>板块</strong>：隔离两物分别列牛顿定律，位移关系找摩擦生热 Q = f·Δx相对。</li>
+    </ul>
+
+    <blockquote>力学大题通用流程：定对象 → 画受力 → 列方程（牛顿/动能/守恒）→ 代数求解。先选“能量观点”往往比纯力观点快。</blockquote>
+  </article>
+</main>
+
+<script src="../assets/theme.js"></script>
+</body>
+</html>
