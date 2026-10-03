@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>欢迎使用我的笔记</title>
+<meta name="description" content="个人笔记站使用说明">
+<script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">📚 学习笔记</a>
+    <button id="themeToggle" class="theme-btn" aria-label="切换主题" title="切换亮/暗色">🌙</button>
+  </div>
+</header>
+
+<main class="container reading">
+  <a class="back" href="../index.html">← 返回首页</a>
+  <article class="note">
+    <div class="note-meta"><span class="card-cat">指南</span><span>2026-10-03</span></div>
+    <h1>欢迎使用我的笔记</h1>
+
+    <p>这是一个<strong>纯前端、完全免费、跨设备</strong>的个人笔记站：用 GitHub Pages 托管，手机、平板、电脑输入同一个网址都能打开，随时随地查看。</p>
+
+    <h2>你完全不用写代码</h2>
+    <p>日常使用只有三步，且前两步由 AI 完成：</p>
+    <ol>
+      <li><strong>你给内容</strong>：把整理好的笔记（文字、要点、甚至草稿都行）直接发给我。</li>
+      <li><strong>AI 生成并发布</strong>：我把内容排版成网页，生成好代码后推送到 GitHub，几秒后线上更新。</li>
+      <li><strong>你随时看</strong>：打开网址即可，手机平板自适应排版。</li>
+    </ol>
+
+    <h2>想调整排版怎么办</h2>
+    <p>直接告诉我即可，例如：</p>
+    <ul>
+      <li>「卡片间距大一点」「字再大些」</li>
+      <li>「加个目录」「换成护眼绿」</li>
+      <li>「这篇笔记加个表格 / 代码块」</li>
+    </ul>
+    <p>我改完重新推送，你刷新页面就是新样式。</p>
+
+    <blockquote>提示：所有笔记数据集中在一个 <code>notes/manifest.json</code> 里，每篇笔记是一个独立网页。新增笔记 = 加一个网页 + 在清单里登记一行，干净好维护。</blockquote>
+
+    <h2>当前示例笔记</h2>
+    <ul>
+      <li><span class="tag">词汇</span>port 词族：用词根串记一片单词</li>
+      <li><span class="tag">方法</span>艾宾浩斯遗忘曲线：科学复习节奏</li>
+    </ul>
+  </article>
+</main>
+
+<script src="../assets/theme.js"></script>
+</body>
+</html>
