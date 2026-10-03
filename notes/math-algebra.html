@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学 · 函数与数列</title>
+<meta name="description" content="函数性质、三角、数列、导数">
+<script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">📚 学习笔记</a>
+    <button id="themeToggle" class="theme-btn" aria-label="切换主题" title="切换亮/暗色">🌙</button>
+  </div>
+</header>
+
+<main class="container reading">
+  <a class="back" href="../index.html#math">← 返回数学</a>
+  <article class="note">
+    <div class="note-meta"><span class="card-cat">数学</span><span>2026-10-03</span></div>
+    <h1>函数与数列</h1>
+
+    <h2>函数三要素与性质</h2>
+    <ul>
+      <li><strong>定义域优先</strong>：求值域、解方程前先写定义域（分母、根号、对数真数）。</li>
+      <li><strong>单调性</strong>：定义法（取值→作差→变形→定号）或导数法。</li>
+      <li><strong>奇偶性</strong>：先看定义域是否关于原点对称，再验 f(-x) 与 f(x) 的关系。</li>
+    </ul>
+
+    <h2>三角函数常用结论</h2>
+    <table>
+      <thead><tr><th>结论</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>诱导公式口诀</td><td>奇变偶不变，符号看象限</td></tr>
+        <tr><td>辅助角公式</td><td>a·sin x + b·cos x = √(a²+b²)·sin(x+φ)</td></tr>
+        <tr><td>正弦定理</td><td>a/sinA = b/sinB = c/sinC = 2R</td></tr>
+        <tr><td>余弦定理</td><td>a² = b² + c² − 2bc·cos A</td></tr>
+      </tbody>
+    </table>
+
+    <h2>数列</h2>
+    <ul>
+      <li>等差：aₙ = a₁ + (n−1)d，前 n 项和 Sₙ = n(a₁+aₙ)/2。</li>
+      <li>等比：aₙ = a₁·qⁿ⁻¹（注意 q=1 时求和退化为 na₁）。</li>
+      <li><strong>求和方法</strong>：裂项相消、错位相减、分组求和——看结构选方法。</li>
+      <li>递推式常用思路：构造 aₙ₊₁ + λ = q(aₙ + λ) 化为等比。</li>
+    </ul>
+
+    <h2>导数应用</h2>
+    <ol>
+      <li>切线：y − f(x₀) = f′(x₀)(x − x₀)（注意“在点处”与“过点”的区别）。</li>
+      <li>单调性：f′(x) &gt; 0 递增；极值点两侧变号才算极值。</li>
+      <li>恒成立/能成立：分离参数后转为最值问题（恒成立 ≤ 最大，能成立 ≥ 最小）。</li>
+    </ol>
+
+    <blockquote>大题套路相对固定：先写定义域，再求导列表，最后答单调区间与极值——步骤分一分不丢。</blockquote>
+  </article>
+</main>
+
+<script src="../assets/theme.js"></script>
+</body>
+</html>
