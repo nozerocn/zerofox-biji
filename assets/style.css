@@ -228,3 +228,20 @@ body {
   .settings .grid2 { grid-template-columns: 1fr; }
   .row2 { grid-template-columns: 1fr; }
 }
+
+/* ===== 登录页 ===== */
+.login-wrap { max-width: 380px; display: flex; align-items: center; min-height: 72vh; margin: 0 auto; }
+.login-card { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 26px; }
+.login-card h1 { margin: 0 0 4px; font-size: 1.5rem; }
+.login-card .sub { margin: 0 0 18px; color: var(--text-soft); font-size: .9rem; }
+
+/* ===== 顶栏登录区 ===== */
+.nav-auth { display: flex; align-items: center; gap: 10px; flex: none; }
+.nav-auth .uname { font-size: .85rem; color: var(--text-soft); }
+.login-btn { padding: 6px 13px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); text-decoration: none; font-size: .9rem; cursor: pointer; }
+.login-btn:hover { border-color: var(--accent); }
+
+/* ===== 笔记卡片管理操作 ===== */
+.item-actions { display: flex; gap: 8px; margin-left: auto; flex: none; align-self: center; }
+.item-actions .del { border: 1px solid var(--border); background: var(--bg-soft); color: var(--text-soft); border-radius: 8px; padding: 4px 10px; font-size: .8rem; cursor: pointer; font-family: inherit; }
+.item-actions .del:hover { border-color: #dc2626; color: #dc2626; }
