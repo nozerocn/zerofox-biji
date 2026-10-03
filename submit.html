@@ -13,27 +13,18 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="./index.html">📚 学习笔记</a>
-    <button id="themeToggle" class="theme-btn" aria-label="切换主题" title="切换亮/暗色">🌙</button>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <span class="uname" id="who"></span>
+      <button id="logoutBtn" class="theme-btn" style="width:auto;padding:0 12px;border-radius:8px;font-size:.85rem;">退出</button>
+      <button id="themeToggle" class="theme-btn" aria-label="切换主题" title="切换亮/暗色">🌙</button>
+    </div>
   </div>
 </header>
 
 <main class="container reading">
   <a class="back" href="./index.html">← 返回首页</a>
   <h1>✍️ 写笔记</h1>
-  <p class="sub" style="color:var(--text-soft);margin-top:0;">支持 Markdown，写好后一键发布到 GitHub（生成独立笔记页并自动更新首页）。<b>正文里可直接 Ctrl+V 粘贴截图、或把图片拖进来，会自动上传并插入。</b></p>
-
-  <details class="settings" open>
-    <summary>GitHub 发布设置（仅首次填写，保存在本浏览器）</summary>
-    <div class="field">
-      <label>仓库（owner/repo）</label>
-      <input id="cfgRepo" placeholder="例如 zhangsan/my-notes" autocomplete="off" spellcheck="false">
-    </div>
-    <div class="grid2">
-      <div class="field"><label>分支</label><input id="cfgBranch" value="master" autocomplete="off"></div>
-      <div class="field"><label>访问令牌 PAT</label><input id="cfgToken" type="password" placeholder="ghp_… 或 github_pat_…" autocomplete="off"></div>
-    </div>
-    <p style="color:var(--text-soft);font-size:.82rem;margin:0;">令牌需要 <code>repo</code> 权限；只存在本机浏览器，仅用于调用 GitHub API 提交笔记，不会发往任何其它服务器。</p>
-  </details>
+  <p class="sub" style="color:var(--text-soft);margin-top:0;">已登录，支持 Markdown 与图片粘贴/拖拽，点“发布”即写入仓库并更新首页。</p>
 
   <div class="form">
     <div class="row2">
@@ -58,6 +49,8 @@
   </div>
 </main>
 
+<script src="./assets/config.js"></script>
+<script src="./assets/auth.js"></script>
 <script src="./assets/theme.js"></script>
 <script src="./assets/submit-app.js"></script>
 </body>
