@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生物 · 遗传与进化</title>
+<meta name="description" content="孟德尔定律、伴性遗传、概率计算">
+<script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">📚 学习笔记</a>
+    <button id="themeToggle" class="theme-btn" aria-label="切换主题" title="切换亮/暗色">🌙</button>
+  </div>
+</header>
+
+<main class="container reading">
+  <a class="back" href="../index.html#biology">← 返回生物</a>
+  <article class="note">
+    <div class="note-meta"><span class="card-cat">生物</span><span>2026-10-03</span></div>
+    <h1>遗传与进化</h1>
+
+    <h2>孟德尔两大定律</h2>
+    <table>
+      <thead><tr><th>定律</th><th>适用</th><th>F₁ 自交比</th><th>测交比</th></tr></thead>
+      <tbody>
+        <tr><td>分离定律</td><td>一对相对性状</td><td>3 : 1</td><td>1 : 1</td></tr>
+        <tr><td>自由组合定律</td><td>两对及以上（非同源染色体上）</td><td>9 : 3 : 3 : 1</td><td>1 : 1 : 1 : 1</td></tr>
+      </tbody>
+    </table>
+
+    <h2>9:3:3:1 的常见变式</h2>
+    <ul>
+      <li><strong>9 : 7</strong> → 两对基因同时存在才表现（互补）。</li>
+      <li><strong>12 : 3 : 1</strong> → 显性上位。</li>
+      <li><strong>9 : 6 : 1</strong> → 累加效应。</li>
+      <li><strong>13 : 3</strong> → 隐性上位。</li>
+    </ul>
+    <p>思路：先看 F₂ 比例与 16 的关系，反推“哪几份合并了”，再定位基因作用方式。</p>
+
+    <h2>伴性遗传判断</h2>
+    <ul>
+      <li>隐性病：双亲正常生出患病女儿 → 常染色体隐性（“无中生有为隐性，生女患病为常隐”）。</li>
+      <li>显性病：患病双亲生出正常女儿 → 常染色体显性（“有中生无为显性，生女正常为常显”）。</li>
+      <li>X 染色体遗传：男性患者多于女性（隐性）／女性多于男性（显性），且交叉遗传。</li>
+    </ul>
+
+    <h2>概率计算要点</h2>
+    <ol>
+      <li>先逐一分析每对基因，再用<strong>乘法原理</strong>组合。</li>
+      <li>“患病男孩”与“男孩患病”不同：前者 = 患病概率 × ½；后者 = 在男孩范围内患病。</li>
+      <li>已有一个孩子患病时，后续孩子概率不受影响（每次独立）。</li>
+    </ol>
+
+    <blockquote>现代生物进化理论核心：种群是进化的基本单位，<strong>基因频率的改变</strong>才是实质；突变和基因重组提供原材料，自然选择决定方向。</blockquote>
+  </article>
+</main>
+
+<script src="../assets/theme.js"></script>
+</body>
+</html>
