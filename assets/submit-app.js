@@ -77,6 +77,16 @@
     var files = Array.prototype.slice.call(e.dataTransfer.files || []).filter(function (f) { return f.type && f.type.indexOf('image') === 0; });
     if (files.length) { e.preventDefault(); handleImages(files); }
   });
+  // —— 按钮选择图片上传（手机/平板/电脑通用，比 Ctrl+V 更可靠）——
+  var btnImg = $('btnImg'), filePick = $('filePick');
+  if (btnImg && filePick) {
+    btnImg.addEventListener('click', function () { filePick.click(); });
+    filePick.addEventListener('change', function () {
+      var files = Array.prototype.slice.call(filePick.files || []);
+      filePick.value = ''; // 允许连续选同一张图
+      if (files.length) handleImages(files);
+    });
+  }
 
   function buildNoteHtml(subj, title, bodyHtml) {
     return '<!DOCTYPE html>\n<html lang="zh-CN" data-theme="light">\n<head>\n<meta charset="UTF-8">\n' +
@@ -97,7 +107,7 @@
       if (!r.ok) throw new Error('读取 manifest 失败（' + r.status + '），检查仓库/分支是否正确');
       return r.json();
     }).then(function (j) {
-      var data = JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\s/g, ''))));
+      var data = JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\s/g, '')))));
       return { data: data, sha: j.sha };
     });
   }
