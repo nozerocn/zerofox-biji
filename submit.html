@@ -33,11 +33,15 @@
     </div>
 
     <div class="field">
-      <label>内容（Markdown）</label>
+      <label>内容（Markdown）
+        <button type="button" class="btn btn-sm" id="btnImg" title="从本机选择图片上传并插入正文（手机/平板建议用这个）">🖼 插入图片</button>
+        <span class="hint">电脑上可直接 Ctrl+V 粘贴截图，也可把图片拖进输入框</span>
+      </label>
       <div class="editor-grid">
-        <textarea id="fMd" placeholder="在此用 Markdown 写笔记…&#10;&#10;## 小标题&#10;- 列表项&#10;&#10;**加粗**、*斜体*、&#96;代码&#96;、&gt; 引用、表格等均可。&#10;💡 直接 Ctrl+V 粘贴截图 / 拖拽图片，会自动上传插入。"></textarea>
+        <textarea id="fMd" placeholder="在此用 Markdown 写笔记…&#10;&#10;## 小标题&#10;- 列表项&#10;&#10;**加粗**、*斜体*、&#96;代码&#96;、&gt; 引用、表格等均可。"></textarea>
         <div class="preview-pane" id="preview"><span class="ph">实时预览会显示在这里…</span></div>
       </div>
+      <input type="file" id="filePick" accept="image/*" multiple hidden>
     </div>
 
     <div class="actions">
