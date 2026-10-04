@@ -100,8 +100,11 @@
       '<h1>' + esc(title) + '</h1>\n' + bodyHtml + '\n</article></main>\n' +
       '<script src="../assets/theme.js"></' + 'script>\n</body></html>\n';
   }
+  // 注意：GitHub API 对文件 GET 返回 cache-control: private, max-age=60，
+  // 若不加 cache:'no-store'，60 秒内重复发布会拿到旧 sha → PUT 返回 409。
   function readManifest(repo, branch, token) {
     return fetch('https://api.github.com/repos/' + repo + '/contents/notes/manifest.json?ref=' + encodeURIComponent(branch), {
+      cache: 'no-store',
       headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' }
     }).then(function (r) {
       if (!r.ok) throw new Error('读取 manifest 失败（' + r.status + '），检查仓库/分支是否正确');
@@ -120,7 +123,26 @@
     return fetch('https://api.github.com/repos/' + repo + '/contents/notes/manifest.json', {
       method: 'PUT', headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: 'add note to manifest: ' + entry.title, branch: branch, sha: manifest.sha, content: b64(JSON.stringify(manifest.data, null, 2)) })
-    }).then(function (r) { if (!r.ok) throw new Error('更新 manifest 失败（' + r.status + '）'); });
+    }).then(function (r) {
+      return r.json().then(function (j) {
+        if (r.status === 409) { var err = new Error('__RETRY__'); err.gh = j.message || ''; throw err; }
+        if (!r.ok) throw new Error('更新 manifest 失败（' + r.status + '）' + (j.message ? '：' + j.message : ''));
+        return j;
+      });
+    });
+  }
+  // 409 = sha 过期 → 重读清单拿新 sha 再写，最多 4 次
+  function updateManifest(repo, branch, token, entry) {
+    var tries = 0;
+    function run() {
+      return readManifest(repo, branch, token).then(function (m) {
+        return updateManifest(repo, branch, token, entry, m).then(function () { return true; });
+      }).catch(function (e) {
+        if (e && e.message === '__RETRY__' && tries < 3) { tries++; show('清单有并发更新，正在重试…（' + (tries + 1) + '/4）', 'info'); return run(); }
+        throw e;
+      });
+    }
+    return run();
   }
   function show(msg, type) { status.className = 'status ' + (type || 'info'); status.innerHTML = msg; }
 
@@ -141,11 +163,11 @@
       body: JSON.stringify({ message: 'add note: ' + title, branch: branch, content: b64(noteHtml) })
     })
       .then(function (r) {
-        if (r.status === 422) throw new Error('该标题对应的文件已存在（' + slug + '），换个标题试试。');
-        if (!r.ok) throw new Error('创建笔记文件失败（' + r.status + '）');
-        return readManifest(repo, branch, token);
+        // 422 = 同名文件已存在，正文已是最新，继续走登记清单即可（不阻断发布）
+        if (!r.ok && r.status !== 422) throw new Error('创建笔记文件失败（' + r.status + '）');
+        return r.json().catch(function () { return {}; });
       })
-      .then(function (m) { return updateManifest(repo, branch, token, { subjectId: subj.id, subjectName: subj.name, icon: subj.icon, slug: slug, title: title, desc: desc }, m); })
+      .then(function () { return updateManifest(repo, branch, token, { subjectId: subj.id, subjectName: subj.name, icon: subj.icon, slug: slug, title: title, desc: desc }); })
       .then(function () { btn.disabled = false; show('✅ 发布成功！刷新首页即可看到《' + esc(title) + '》。<a href="./notes/' + slug + '.html" target="_blank">查看笔记 →</a>', 'ok'); })
       .catch(function (e) { btn.disabled = false; show('❌ ' + esc(e.message), 'err'); });
   }
