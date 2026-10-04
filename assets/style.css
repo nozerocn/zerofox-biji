@@ -216,6 +216,8 @@ body {
 .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
 .btn-primary:hover { opacity: .92; }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-sm { padding: 5px 13px; font-size: .8rem; border-radius: 8px; vertical-align: middle; margin-left: 8px; }
+.field label .hint { font-weight: 400; font-size: .78rem; color: var(--text-soft); margin-left: 8px; }
 
 .status { font-size: .9rem; padding: 12px 14px; border-radius: 10px; display: none; }
 .status a { color: inherit; font-weight: 600; }
